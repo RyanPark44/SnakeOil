@@ -1,0 +1,41 @@
+services:
+  frontend:
+    build:
+      context: ./frontend/nextjs-docker
+      target: dev
+    container_name: nextjs-frontend
+    restart: always
+    command: npm run dev
+    ports:
+      - "3000:3000"
+    develop:
+      watch:
+        - action: sync
+          path: ./frontend/nextjs-docker
+          target: /app
+        - action: rebuild
+          path: ./frontend/nextjs-docker/package.json
+  backend:
+    build:
+      context: ./backend/server
+    container_name: fastapi-backend
+    restart: always
+    command: fastapi dev app/main.py --host 0.0.0.0 --port 8000
+    ports:
+      - "8000:8000"
+    develop:
+      watch:
+        - action: sync
+          path: ./backend/server
+          target: /code
+        - action: rebuild
+          path: .backend/server/requirements.txt
+  db:
+    build:
+      context: ./backend/database
+    container_name: psql-db
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
