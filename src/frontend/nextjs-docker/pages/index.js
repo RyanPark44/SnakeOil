@@ -21,6 +21,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>SnakeOil.com</h1>
+        <h1 className={styles.title}>Mode={process.env.NODE_ENV}</h1>
 
         <p className={styles.description}>
           {data ? JSON.stringify(data, null, 2) : "Loading..."}
