@@ -6,7 +6,7 @@ export default function Home() {
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    fetch("http://0.0.0.0:8000")
+    fetch("http://0.0.0.0:8000/courses")
       .then((response) => response.json())
       .then((json) => setData(json))
       .catch((error) => console.error(error));
