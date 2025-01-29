@@ -1,4 +1,4 @@
-import CoursePageTemplate from "../../components/coursePageTemplate";
+import CoursePageTemplate from "../../components/layout/coursePageTemplate";
 import { useRouter } from "next/router";
 
 export default function CoursePage({ data }) {
@@ -10,7 +10,14 @@ export default function CoursePage({ data }) {
 
   return (
     <>
-      <CoursePageTemplate title={data.title}></CoursePageTemplate>;
+      <CoursePageTemplate
+        key={data.id}
+        id={data.id}
+        title={data.title}
+        description={data.description}
+        author={data.author}
+        publishDate={data.publishDate}
+      />
     </>
   );
 }
@@ -30,7 +37,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const { slug } = params;
 
-  const res = await fetch("http://172.18.0.2:8000/course/${slug}");
+  const res = await fetch(`http://172.18.0.2:8000/course/${slug}`);
   const data = await res.json();
 
   return {

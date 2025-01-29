@@ -16,7 +16,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-sampleCourses = [{"title": "Course 1", "slug": "course-1"}, {"title": "Course 2", "slug": "course-2"}]
+sampleCourses = [
+    {"title": "Intro to React", "slug": "intro-to-react", "id": 0, "author": "Todd Howard", "publishDate": "2025-01-01", "description": "NA"}, 
+    {"title": "Intro to Flack", "slug": "intro-to-flack", "id": 1, "author": "John Doe", "publishDate": "2025-01-02", "description": "NA"}, 
+]
 
 @app.get("/")
 def read_root() -> Union[str, dict]:
@@ -32,4 +35,8 @@ def read_courses() -> List[dict]:
 
 @app.get("/course/{course_id}")
 def read_item(course_id: str, q: Union[str, None] = None):
-    return {"title": course_id, "q": q}
+    for course in sampleCourses:
+        if course.get('id') == int(course_id):
+            return course
+        
+    return {"title": "course not found", "q": q}

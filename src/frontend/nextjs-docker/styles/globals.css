@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+@theme {
+  --color-primary: #4f46e5;
+}
+
 html,
 body {
   padding: 0;
